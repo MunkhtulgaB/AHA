@@ -38,7 +38,13 @@
     }
 
     .row.pictography img {
-        width: 33%;
+        height: 100%;
+        object-fit: contain;
+        
+    }
+
+    .letter-tile {
+        /* border: 1px solid red; */
     }
 </style>
 
@@ -48,15 +54,15 @@
 <body>
 
     <div class="text-center slide page">
-        <div class="row" style="font-size: 20vw; line-height: 20vw; letter-spacing: 3vw;">
-            <div class="col-4">A</div>
-            <div class="col-4">H</div>
-            <div class="col-4">A!</div>
+        <div class="row" style="font-size: 20vw; line-height: 20vw;">
+            <div class="col-4 letter-tile">A</div>
+            <div class="col-4 letter-tile">H</div>
+            <div class="col-4 letter-tile" style="letter-spacing: 3vw;">A!</div>
         </div>
         <div class="row pictography">
-            <img src="images/painting_tree.png"/>
-            <img src="images/human_neutral_bold.png"/>
-            <img src="images/decision_tree.png"/>
+            <div class="col-4"><img src="images/painting_tree.png"/></div>
+            <div class="col-4"><img src="images/human_neutral_bold.png"/></div>
+            <div class="col-4"><img src="images/decision_tree.png"/></div>
         </div>
     </div>
 
@@ -65,16 +71,41 @@
         <a id="btn-ai" href="#ai-essence" class="link-guide">What is essence?</a>
     </div>
 
-    <div id="ai-essence" class="slide page fade" style="background-color: black;">
+    <div id="ai-essence" class="row slide page fade" style="background-color: black; color: white">
+        
+        <h2>AI asks</h2>
 
+        <p class="lead">
+            Deep learning dominates modern AI. 
+            However, it is not free of flaws.
+        </p>
+        <p class="lead">
+            Unfortunately, imperceptible changes to input can confuse an AI model.
+            This is because a model learns to pay too much attention to non-essential information.
+            The question is then:
+        </p>
+
+        <h1>What is essence?</h1>
     </div>
 
     <div class="text-center slide page">
         <a id="btn-art" href="#art-essence" class="link-guide">What is essence?</a>
     </div>
 
-    <div id="art-essence" class="slide page fade" style="background-color: black;">
+    <div id="art-essence" class="slide page fade" style="background-color: black; color: white;">
+        <h2>Art asks</h2>
 
+        <p class="lead">
+            In visual arts, the same object may be depicted in wildly different ways.
+            These depictions constantly challenge what makes an object the object, without ever abandoning the boundaries of the human mind.
+        </p>
+        
+        <p class="lead">
+            Therefore, art can be said to provide the widest range of perspectives humanly possible.
+            With that insight, we may be able to answer the following in a strictly human way and learn more about ourselves.
+        </p>
+
+        <h1>What is essence?</h1>
     </div>
 
 </body>
