@@ -1,9 +1,10 @@
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js'
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js'
-import { getDatabase, ref, set, child, get } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js'
+import { getDatabase, onChildAdded, onChildRemoved, ref, set, push, child, get } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js'
 import { GoogleAuthProvider, getAuth, signInWithRedirect, signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js'
 import { config } from "./config.js"
+import "https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js";
 
 //add your credentials from firebase project
 const firebaseConfig = config;
@@ -23,6 +24,20 @@ onAuthStateChanged(auth, (user) => {
         writeUserData(user.uid, user.displayName, user.email, user.photoURL)
         console.log("getting data")
         getData(user.uid);
+        
+        const imagesRef = ref(db, "images");
+        onChildAdded(imagesRef, function(data) {
+          const imgData = data.val();
+          console.log("loaded image", imgData.name);
+          const imgBase64 = imgData.imageBase64;
+          $("#img_wall").append(
+            `<img id="${data.key}" src="${imgBase64}" width="300px;"/>`
+          )
+        });
+        onChildRemoved(imagesRef, function(data) {
+          $(`img#${data.key}`).remove();
+        });
+
     } else {
         // User is signed out
         const provider = new GoogleAuthProvider();
@@ -64,6 +79,15 @@ function writeUserData(userId, name, email, imageUrl) {
     });
 }
 
+
+function writeImageData(name, imageBase64) {
+  push(ref(db, 'images/'), {
+    name: name,
+    imageBase64: imageBase64
+  });
+}
+
+
 function getData(userId) {
     get(child(ref(db), `users/${userId}`)).then((snapshot) => {
       if (snapshot.exists()) {
@@ -75,3 +99,5 @@ function getData(userId) {
       console.error(error);
     });
 }
+
+export { writeImageData }
