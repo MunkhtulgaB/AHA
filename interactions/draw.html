@@ -3,99 +3,23 @@
 
 <head>
     <meta charset=utf-8>
-    <style>
-        body {
-            margin:0px;
-        }
-        canvas {
-            -webkit-touch-callout: none;
-            -webkit-text-size-adjust: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-
-        #drawr-container3 {
-            align-self: center;
-            width: 1000px;
-            height: 1000px;
-            border: 3px dotted gray;margin:20px;
-        }
-
-        #container {
-            display: flex;
-            flex-direction: column;
-            width: 100vw;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-        }
-
-        #submit-btn {
-            align-self: center;
-            width: 200px;
-        }
-    </style>
-    
     <title>AHA! Draw</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="../style/draw.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="../script/plugins/drawr/dist/jquery.drawr.combined.js"></script>
+    <script type="module" src="../script/draw.js"></script>
 </head>
 
 <body>
     <div id="container">
-        
         <div id="drawr-container3">
             <canvas class="demo-canvas drawr-test3"></canvas>
         </div>
         <input type="file" id="file-picker" style="display:none;"> 
         <button id="submit-btn" class="btn btn-primary">Submit</button>
     </div>
-
-    <script type="module">
-        import { writeImageData } from "../script/firebase.js";
-
-        $("#drawr-container3 .demo-canvas").drawr({ "enable_tranparency" : true });
-        $("#drawr-container3 .demo-canvas").drawr("start");
-
-        //add submit button
-        $("#submit-btn").on("click",function(data){
-            var imagedata = $("#drawr-container3 .demo-canvas").drawr("export","image/png");
-            writeImageData("userInput", imagedata)
-        });
-
-        //add custom file picker button
-        var buttoncollection = $("#drawr-container3 .demo-canvas").drawr("button", {
-            "icon":"mdi mdi-folder-open mdi-24px"
-        }).on("touchstart mousedown",function(){
-            //alert("demo of a custom button with your own functionality!");
-            $("#file-picker").click();
-        });
-
-        $("#file-picker")[0].onchange = function(){
-            var file = $("#file-picker")[0].files[0];
-            var reader = new FileReader();
-            reader.onload = function(e) { 
-                $("#drawr-container3 .demo-canvas").drawr("load",e.target.result);
-            };
-            reader.readAsDataURL(file);
-        };
-
-        // add custom file save button
-        var buttoncollection = $("#drawr-container3 .demo-canvas").drawr("button", {
-            "icon":"mdi mdi-content-save mdi-24px"
-        }).on("touchstart mousedown",function(){
-            var imagedata = $("#drawr-container3 .demo-canvas").drawr("export","image/png");
-            var element = document.createElement('a');
-            element.setAttribute('href', imagedata);// 'data:text/plain;charset=utf-8,' + encodeURIComponent("sillytext"));
-            element.setAttribute('download', "test.png");
-            element.style.display = 'none';
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
-        });
-    </script>
 </body>
 </html>

@@ -1,0 +1,30 @@
+body {
+    margin:0px;
+}
+canvas {
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#drawr-container3 {
+    align-self: center;
+    width: 1000px;
+    height: 1000px;
+    border: 3px dotted gray;margin:20px;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#submit-btn {
+    align-self: center;
+    width: 200px;
+}
