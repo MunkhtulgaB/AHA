@@ -42,7 +42,6 @@ onAuthStateChanged(auth, (user) => {
                 </div>
             </div>`;
 
-            console.log(imgData.isHidden)
             if (imgData.isHidden) {
                 $(content).hide().appendTo("#img_wall").fadeIn(1000);
             } else {

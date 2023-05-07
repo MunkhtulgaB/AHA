@@ -86,6 +86,9 @@ function addImage(data, addPosition) {
       const authorType = $(`<div style="text-align: right;">${authorTypeText}</div>`)
       authorType.appendTo(`#card${data.key} .card-body`);
     }
+
+    // Detect objects from image
+    detectFromImage(data.key, imgData);
   }
 }
 
@@ -101,4 +104,71 @@ function updateImage(data) {
   if (!imgData.isHidden) {
     addImage(data, "end");
   }
+}
+
+
+function detectFromImage(imgKey, data) {
+  console.log("detecting from image", data.name);
+
+  const imgBase64 = data.imageBase64.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+  const api_endpoint = "https://vision.googleapis.com/v1/images:annotate";
+  const request_data = {
+      "requests": [
+        {
+          "image": {
+            "content": imgBase64,
+          },
+          "features": [
+            {
+              "type": "OBJECT_LOCALIZATION",
+              "maxResults": 1,
+            }
+          ]
+        }
+      ],
+    };
+  const payload = JSON.stringify(request_data);
+  const handler = function(data, status) {
+    if (status == "success") {
+      annotateImage(imgKey, data["responses"][0]["localizedObjectAnnotations"]);
+    }
+  }
+  
+  $.ajax({
+    url: `${api_endpoint}?key=AIzaSyDwb1Ng1tFKkM4xbMSCDaPjM5xcqB5auJc`, 
+    type: "POST",
+    data: payload, 
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: handler
+  });
+}
+
+
+function annotateImage(imgKey, annotation) {
+  // Draw the bounding box
+  const bbox = annotation[0]["boundingPoly"]["normalizedVertices"];
+  const normX = bbox[0].x;
+  const normY = bbox[0].y;
+  const normW = bbox[2].x - bbox[0].x;
+  const normH = bbox[2].y - bbox[0].y;
+  console.log(normH);
+
+
+  // Add to the image card
+  const width = $(`img#${imgKey}`).width();
+  const height = $(`img#${imgKey}`).height();
+
+  const x = width * normX, 
+        y = height * normY, 
+        w = width * normW, 
+        h = height * normH;
+  const content = $(`
+    <div style="position: absolute; border: 5px solid blue;
+          left: ${x}px; top: ${y}px; width: ${w}px; height: ${h}px">
+
+    </div>
+  `);
+
+  content.appendTo(`#card${imgKey}`);
 }
