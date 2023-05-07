@@ -20,11 +20,8 @@ function writeUserData(userId, name, email, imageUrl) {
 }
 
 
-function writeImageData(name, imageBase64) {
-  push(ref(db, 'images/'), {
-    name: name,
-    imageBase64: imageBase64
-  });
+function writeImageData(imgData) {
+  return push(ref(db, 'images/'), imgData);
 }
 
 

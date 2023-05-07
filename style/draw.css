@@ -24,7 +24,19 @@ canvas {
     margin: 0;
 }
 
-#submit-btn {
+#done-btn {
     align-self: center;
     width: 200px;
+}
+
+#imgForm {
+    padding: 20px;
+}
+
+input {
+    padding: 5px;
+}
+
+textarea {
+    padding: 5px;
 }
