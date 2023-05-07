@@ -49,6 +49,20 @@ onAuthStateChanged(auth, (user) => {
                 $(content).hide().prependTo("#img_wall").fadeIn(1000);
             }
             btn.appendTo(`#card${data.key} .card-body`);
+
+            // Add image metadata
+            ["name", "description", "authorType"].forEach(function(attr) {
+                const imgInfo = $(`<div><b>${attr}</b>: ${imgData[attr]}</div>`);
+                imgInfo.appendTo(`#card${data.key} .card-body`)
+            });
+            
+            const excludedAttrs = ["imageBase64", "isHidden", "name", "description", "authorType"];
+            for (const attr in imgData) {
+                if (!excludedAttrs.includes(attr)) {
+                    const imgInfo = $(`<div><b>${attr}</b>: ${imgData[attr]}</div>`);
+                    imgInfo.appendTo(`#card${data.key} .card-body`)
+                }
+            }
         });
 
         onChildRemoved(imagesRef, function(data) {

@@ -56,6 +56,7 @@ function addImage(data, addPosition) {
   console.log("loaded image", imgData.name);
 
   if (!imgData.isHidden) {
+    // Add card image
     const content =             
       `<div id="card${data.key}" class="img-card card" style="width: 300px">
           <img class="card-img-top" id="${data.key}" src="${imgData.imageBase64}" width="300px;"/>
@@ -68,6 +69,23 @@ function addImage(data, addPosition) {
     } else {
       $(content).hide().prependTo("#img_wall").fadeIn(1000);
     }
+
+    // Add card body
+    const titleText = imgData.name;
+    const title = $(`<div><b>${titleText}</b></div>`);
+    title.appendTo(`#card${data.key} .card-body`);
+
+    const descriptionText = imgData.description;
+    if (descriptionText) {
+      const description = $(`<div>${descriptionText}</div>`);
+      description.appendTo(`#card${data.key} .card-body`);  
+    }
+
+    const authorTypeText = imgData.authorType;
+    if (authorTypeText) {
+      const authorType = $(`<div style="text-align: right;">${authorTypeText}</div>`)
+      authorType.appendTo(`#card${data.key} .card-body`);
+    }
   }
 }
 
@@ -76,10 +94,11 @@ function updateImage(data) {
   console.log("updating image", imgData.name);
   const imgBase64 = imgData.imageBase64;
 
-  console.log($(`div#${data.key}`))
+  // In any case, remove the image card
+  $(`div#card${data.key}`).remove();
+
+  // Re-add it back at the end with the updates
   if (!imgData.isHidden) {
     addImage(data, "end");
-  } else {
-    $(`div#card${data.key}`).remove();
   }
 }
