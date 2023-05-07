@@ -15,10 +15,10 @@ const auth = getAuth(app);
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const imagesRef = ref(db, "images");
-        onChildAdded(imagesRef, showImages);
+        onChildAdded(imagesRef, addImage);
         onChildChanged(imagesRef, updateImage);
         onChildRemoved(imagesRef, function(data) {
-          $(`img#${data.key}`).remove();
+          $(`div#card${data.key}`).remove();
         });
 
     } else {
@@ -50,15 +50,24 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-function showImages(data) {
+
+function addImage(data, addPosition) {
   const imgData = data.val();
   console.log("loaded image", imgData.name);
-  const imgBase64 = imgData.imageBase64;
 
   if (!imgData.isHidden) {
-    $("#img_wall").prepend(
-      `<img id="${data.key}" src="${imgBase64}" width="300px;"/>`
-    )
+    const content =             
+      `<div id="card${data.key}" class="img-card card" style="width: 300px">
+          <img class="card-img-top" id="${data.key}" src="${imgData.imageBase64}" width="300px;"/>
+          <div class="card-body">
+          </div>
+      </div>`;
+
+    if (addPosition == "end") {
+      $(content).hide().appendTo("#img_wall").fadeIn(1000);
+    } else {
+      $(content).hide().prependTo("#img_wall").fadeIn(1000);
+    }
   }
 }
 
@@ -67,10 +76,10 @@ function updateImage(data) {
   console.log("updating image", imgData.name);
   const imgBase64 = imgData.imageBase64;
 
+  console.log($(`div#${data.key}`))
   if (!imgData.isHidden) {
-    const content = `<img id="${data.key}" src="${imgBase64}" width="300px;"/>`;
-    $(content).hide().prependTo("#img_wall").fadeIn(1000);
+    addImage(data, "end");
   } else {
-    $(`img#${data.key}`).remove();
+    $(`div#card${data.key}`).remove();
   }
 }

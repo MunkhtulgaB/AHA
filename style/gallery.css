@@ -1,0 +1,10 @@
+#img_wall {
+    display: flex;
+    height: fit-content;
+    flex-wrap: wrap;
+}
+
+.img-card {
+    margin: 10px;
+    box-shadow: 1px 1px 3px grey;
+}
