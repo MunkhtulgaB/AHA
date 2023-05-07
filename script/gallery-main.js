@@ -60,7 +60,7 @@ function addImage(data, addPosition) {
     const content =             
       `<div id="card${data.key}" class="img-card card" style="width: 300px">
           <img class="card-img-top" id="${data.key}" src="${imgData.imageBase64}" width="300px;"/>
-          <div class="card-body">
+          <div class="card-body" style="margin-top: 10px;">
           </div>
       </div>`;
 
@@ -121,7 +121,7 @@ function detectFromImage(imgKey, data) {
           "features": [
             {
               "type": "OBJECT_LOCALIZATION",
-              "maxResults": 1,
+              "maxResults": 3,
             }
           ]
         }
@@ -145,30 +145,40 @@ function detectFromImage(imgKey, data) {
 }
 
 
-function annotateImage(imgKey, annotation) {
-  // Draw the bounding box
-  const bbox = annotation[0]["boundingPoly"]["normalizedVertices"];
-  const normX = bbox[0].x;
-  const normY = bbox[0].y;
-  const normW = bbox[2].x - bbox[0].x;
-  const normH = bbox[2].y - bbox[0].y;
-  console.log(normH);
+function annotateImage(imgKey, annotations) {
+  annotations.forEach(function(annotation) {
+    // Draw the bounding box
+    const bbox = annotation["boundingPoly"]["normalizedVertices"];
+    const normX = bbox[0].x;
+    const normY = bbox[0].y;
+    const normW = bbox[2].x - bbox[0].x;
+    const normH = bbox[2].y - bbox[0].y;
 
+    const width = $(`img#${imgKey}`).width();
+    const height = $(`img#${imgKey}`).height();
 
-  // Add to the image card
-  const width = $(`img#${imgKey}`).width();
-  const height = $(`img#${imgKey}`).height();
+    const x = width * normX, 
+          y = height * normY, 
+          w = width * normW, 
+          h = height * normH;
+    const bbox_div = $(`
+      <div style="position: absolute; border: 5px solid blue;
+            left: ${x}px; top: ${y}px; width: ${w}px; height: ${h}px">
 
-  const x = width * normX, 
-        y = height * normY, 
-        w = width * normW, 
-        h = height * normH;
-  const content = $(`
-    <div style="position: absolute; border: 5px solid blue;
-          left: ${x}px; top: ${y}px; width: ${w}px; height: ${h}px">
+      </div>
+    `);
+    bbox_div.hide().appendTo(`#card${imgKey}`).fadeIn(1000);
 
-    </div>
-  `);
-
-  content.appendTo(`#card${imgKey}`);
+    // Add the label and confidence
+    const label_div = $(`
+        <div style="position: absolute; 
+            padding: 2px;
+            left: ${x}px; top: ${y + h}px; 
+            color: blue; font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.8);">
+          ${annotation.name} ${(annotation.score * 100).toFixed(1)}%
+        </div>
+    `);
+    label_div.appendTo(`#card${imgKey}`).fadeIn(1000);
+  });
 }
