@@ -10,8 +10,8 @@ canvas {
 
 #drawr-container3 {
     align-self: center;
-    width: 1000px;
-    height: 1000px;
+    aspect-ratio: 1 / 1;
+    width: min(80vh, 80vw);
     border: 3px dotted gray;margin:20px;
 }
 
