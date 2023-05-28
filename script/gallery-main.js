@@ -10,6 +10,9 @@ const firebaseConfig = config;
 const app = initializeApp(firebaseConfig);
 const db = getDatabase();
 const auth = getAuth(app);
+const TOO_GENERIC_NAMES = ["animal"];
+const MAX_ANNOTATIONS = 1;
+
 
 
 onAuthStateChanged(auth, (user) => {
@@ -115,7 +118,7 @@ function detectFromImage(imgKey, data) {
           "features": [
             {
               "type": "OBJECT_LOCALIZATION",
-              "maxResults": 1,
+              "maxResults": 2,
             }
           ]
         }
@@ -140,7 +143,14 @@ function detectFromImage(imgKey, data) {
 
 
 function annotateImage(imgKey, annotations) {
+  if (!annotations) return;
+
+  var num_annotations = 0;
   annotations.forEach(function(annotation) {
+    // Skip generic annotations
+    if (annotations.length > 1 && TOO_GENERIC_NAMES.includes(annotation.name.toLowerCase())) return;
+    if (num_annotations >= MAX_ANNOTATIONS) return;
+
     // Draw the bounding box
     const bbox = annotation["boundingPoly"]["normalizedVertices"];
     const normX = bbox[0].x;
@@ -174,5 +184,6 @@ function annotateImage(imgKey, annotations) {
         </div>
     `);
     label_div.appendTo(`#card${imgKey}`).fadeIn(1000);
+    num_annotations++;
   });
 }
