@@ -71,15 +71,9 @@ function addImage(data, addPosition) {
     }
 
     // Add card body
-    const titleText = imgData.name;
+    const titleText = imgData.name || "Untitled";
     const title = $(`<div><b>${titleText}</b></div>`);
     title.appendTo(`#card${data.key} .card-body`);
-
-    const descriptionText = imgData.description;
-    if (descriptionText) {
-      const description = $(`<div>${descriptionText}</div>`);
-      description.appendTo(`#card${data.key} .card-body`);  
-    }
 
     const authorTypeText = imgData.authorType;
     if (authorTypeText) {
@@ -121,7 +115,7 @@ function detectFromImage(imgKey, data) {
           "features": [
             {
               "type": "OBJECT_LOCALIZATION",
-              "maxResults": 3,
+              "maxResults": 1,
             }
           ]
         }

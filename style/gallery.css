@@ -6,6 +6,11 @@
 
 .img-card {
     margin: 10px;
-    width: 500px;
+    width: 200px;
     box-shadow: 1px 1px 3px grey;
+}
+
+.img-card > .card-body {
+    height: 60px;
+    font-size: 12px;
 }
