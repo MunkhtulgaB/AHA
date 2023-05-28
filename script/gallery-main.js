@@ -58,7 +58,7 @@ function addImage(data, addPosition) {
   if (!imgData.isHidden) {
     // Add card image
     const content =             
-      `<div id="card${data.key}" class="img-card card" style="width: 300px">
+      `<div id="card${data.key}" class="img-card card">
           <img class="card-img-top" id="${data.key}" src="${imgData.imageBase64}" width="300px;"/>
           <div class="card-body" style="margin-top: 10px;">
           </div>
