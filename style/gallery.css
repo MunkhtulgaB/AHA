@@ -14,3 +14,8 @@
     height: 60px;
     font-size: 12px;
 }
+
+.img-card > .card-body-admin {
+    height: fit-content;
+    font-size: 12px;
+}

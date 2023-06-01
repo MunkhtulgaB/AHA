@@ -36,9 +36,9 @@ onAuthStateChanged(auth, (user) => {
                         </a>`)
             btn.unbind("click").click((imgData.isHidden) ? showImage: hideImage);
             const content =             
-            `<div id="card${data.key}" class="img-card card" style="width: 300px">
-                <img class="card-img-top" id="${data.key}" src="${imgBase64}" width="300px;"/>
-                <div class="card-body">
+            `<div id="card${data.key}" class="img-card card">
+                <img class="card-img-top" id="${data.key}" src="${imgBase64}"/>
+                <div class="card-body card-body-admin">
                 </div>
             </div>`;
 
