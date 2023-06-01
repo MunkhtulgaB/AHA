@@ -1,4 +1,4 @@
-import { writeImageData } from "./firebase.js";
+import { writeImageData, updateImageData } from "./firebase.js";
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js'
 import { getDatabase, onChildAdded, onChildRemoved, onChildChanged, ref, set, push, child, get } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js'
 import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js'
@@ -85,21 +85,28 @@ function addImage(data, addPosition) {
     }
 
     // Detect objects from image
-    detectFromImage(data.key, imgData);
+    if (imgData.annotations) {
+      console.log("Reading annotation data from cache.")
+      annotateImage(data.key, imgData.annotations);
+    } else {
+      console.log("Annotation data not cached. Detecting objects.")
+      detectFromImage(data.key, imgData);
+    }
   }
 }
 
+
+/* Currently, this method is only used to hide images */
 function updateImage(data) {
   const imgData = data.val();
   console.log("updating image", imgData.name);
   const imgBase64 = imgData.imageBase64;
 
-  // In any case, remove the image card
-  $(`div#card${data.key}`).remove();
-
-  // Re-add it back at the end with the updates
-  if (!imgData.isHidden) {
+  const imgCard = $(`div#card${data.key}`);
+  if (imgCard.length == 0 && !imgData.isHidden) {
     addImage(data, "end");
+  } else if (imgCard.length > 0 && imgData.isHidden) {
+    imgCard.remove();
   }
 }
 
@@ -125,9 +132,10 @@ function detectFromImage(imgKey, data) {
       ],
     };
   const payload = JSON.stringify(request_data);
-  const handler = function(data, status) {
+  const handler = function(annotationData, status) {
     if (status == "success") {
-      annotateImage(imgKey, data["responses"][0]["localizedObjectAnnotations"]);
+      annotateImage(imgKey, annotationData["responses"][0]["localizedObjectAnnotations"]);
+      cacheAnnotations(imgKey, annotationData["responses"][0]["localizedObjectAnnotations"]);
     }
   }
   
@@ -139,6 +147,11 @@ function detectFromImage(imgKey, data) {
     dataType: "json",
     success: handler
   });
+}
+
+
+function cacheAnnotations(imgKey, annotations) {
+  updateImageData(imgKey, {"annotations": annotations})
 }
 
 

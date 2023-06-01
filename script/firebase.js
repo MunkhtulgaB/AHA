@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js'
-import { getDatabase, onChildAdded, onChildRemoved, ref, set, push, child, get } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js'
+import { getDatabase, onChildAdded, onChildRemoved, ref, set, push, child, get, update } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js'
 import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js'
 import { config } from "./config.js"
 
@@ -25,6 +25,16 @@ function writeImageData(imgData) {
 }
 
 
+function updateImageData(imgKey, imgData) {
+  const updates = {};
+
+  for (const key in imgData) {
+    updates[`images/${imgKey}/${key}`] = imgData[key];
+  }
+  return update(ref(db), updates);
+}
+
+
 function getData(userId) {
     get(child(ref(db), `users/${userId}`)).then((snapshot) => {
       if (snapshot.exists()) {
@@ -37,4 +47,4 @@ function getData(userId) {
     });
 }
 
-export { writeImageData }
+export { writeImageData, updateImageData }
