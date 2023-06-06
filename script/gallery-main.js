@@ -85,13 +85,16 @@ function addImage(data, addPosition) {
     }
 
     // Detect objects from image
-    if (imgData.annotations) {
-      console.log("Reading annotation data from cache.")
-      annotateImage(data.key, imgData.annotations);
-    } else {
-      console.log("Annotation data not cached. Detecting objects.")
-      detectFromImage(data.key, imgData);
-    }
+    const annotateTimeout = setTimeout(function() {
+      if (imgData.annotations) {
+        console.log("Reading annotation data from cache.")
+        annotateImage(data.key, imgData.annotations);
+      } else {
+        console.log("Annotation data not cached. Detecting objects.")
+        detectFromImage(data.key, imgData);
+      }
+    }, 1000)
+
   }
 }
 
