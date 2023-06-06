@@ -154,7 +154,9 @@ function detectFromImage(imgKey, data) {
 
 
 function cacheAnnotations(imgKey, annotations) {
-  updateImageData(imgKey, {"annotations": annotations})
+  if (annotations) {
+    updateImageData(imgKey, {"annotations": annotations});
+  }
 }
 
 
@@ -169,6 +171,12 @@ function annotateImage(imgKey, annotations) {
 
     // Draw the bounding box
     const bbox = annotation["boundingPoly"]["normalizedVertices"];
+    console.log(bbox)
+
+    if (!(bbox[0] && bbox[2])) {
+      return;
+    }
+
     const normX = bbox[0].x;
     const normY = bbox[0].y;
     const normW = bbox[2].x - bbox[0].x;
