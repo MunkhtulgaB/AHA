@@ -1,5 +1,6 @@
 body {
     margin:0px;
+    display: grid;
 }
 canvas {
     -webkit-touch-callout: none;
@@ -8,29 +9,92 @@ canvas {
     user-select: none;
 }
 
+
+#canvas-header {
+    margin-top: 20px;
+}
+
+
 #drawr-container3 {
     align-self: center;
     aspect-ratio: 1 / 1;
-    width: min(90vh, 90vw);
-    border: 3px dotted gray;margin:20px;
+    width: min(80vh, 80vw);
+    margin: 20px 0;
+    border: 3px dotted gray;
 }
 
 #container {
+    justify-self: center;
     display: flex;
     flex-direction: column;
-    width: 100vw;
+    width: fit-content;
     height: 100%;
     padding: 0;
     margin: 0;
 }
 
-#done-btn {
+#cover {
+    width: 100vw;
+    background-color: white;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    opacity: 1;
+}
+
+#coverContent {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 50vw;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#optionsContainer {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 50vw;
+    height: fit-content;
+    text-align: center;
+}
+
+#start-btn {
     align-self: center;
+}
+
+#done-btn {
+    align-self: right;
     width: 200px;
+}
+
+#restart-btn {
+    align-self: left;
+    width: 200px;
+}
+
+#button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 #imgForm {
     padding: 20px;
+}
+
+.btn-light {
+    border: 1px solid lightgrey;
 }
 
 input {

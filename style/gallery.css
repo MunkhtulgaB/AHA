@@ -19,3 +19,7 @@
     height: fit-content;
     font-size: 12px;
 }
+
+body {
+    overflow-y: hidden;
+}

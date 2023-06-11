@@ -14,12 +14,35 @@
 </head>
 
 <body>
+    <div id="cover">
+        <div id="coverContent">
+            <h1>Share your unique perspective!</h1>
+            <p class="lead">
+                Show us something we have seen in a way we have never seen it.
+                <hr>
+                
+                <br> 
+                In this interaction, we invite you to draw an animal/object in an as creative and unique way as possible.
+                
+                Can you depict something with only a few strokes or simple shapes? 
+                Or can you exaggerate it without losing the essence?
+                Can you fool the AI object detector? 
+                Answer to these challenges or simply have fun getting creative by pressing the "Start" button below.
+            </p>
+            <button id="start-btn" class="btn btn-success"><b>Start</b></button>
+        </div>
+    </div>
+
     <div id="container">
+        <h2 id="canvas-header"></h2>
         <div id="drawr-container3">
             <canvas class="demo-canvas drawr-test3"></canvas>
         </div>
         <input type="file" id="file-picker" style="display:none;"> 
-        <button id="done-btn" class="btn btn-primary">Done</button>
+        <div id="button-container">
+            <button id="restart-btn" class="btn btn-secondary">Restart</button>
+            <button id="done-btn" class="btn btn-primary"><b>Done</b></button>
+        </div>
     </div>
 </body>
 </html>
