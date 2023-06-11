@@ -1,4 +1,4 @@
-import { writeImageData } from "./firebase.js";
+import { writeUserData, writeImageData } from "./firebase.js";
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js'
 import { getDatabase, onChildAdded, onChildRemoved, ref, update} from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js'
 import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js'
@@ -80,8 +80,7 @@ onAuthStateChanged(auth, (user) => {
             const user = result.user;
             // IdP data available using getAdditionalUserInfo(result)
             // ...
-
-
+            writeUserData(user.uid, user.displayName, user.email, user.photoURL);
 
         }).catch((error) => {
             // Handle Errors here.

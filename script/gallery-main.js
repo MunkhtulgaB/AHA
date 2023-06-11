@@ -1,4 +1,4 @@
-import { writeImageData, updateImageData } from "./firebase.js";
+import { writeUserData, writeImageData, updateImageData } from "./firebase.js";
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js'
 import { getDatabase, onChildAdded, onChildRemoved, onChildChanged, ref, set, push, child, get } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js'
 import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js'
@@ -17,7 +17,9 @@ const MAX_ANNOTATIONS = 1;
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
+      console.log(user)
         const imagesRef = ref(db, "images");
+        writeUserData(user.uid, user.displayName, user.email, user.photoURL)
         onChildAdded(imagesRef, addImage);
         onChildChanged(imagesRef, updateImage);
         onChildRemoved(imagesRef, function(data) {
@@ -36,7 +38,7 @@ onAuthStateChanged(auth, (user) => {
             const user = result.user;
             // IdP data available using getAdditionalUserInfo(result)
             // ...
-
+            writeUserData(user.uid, user.displayName, user.email, user.photoURL);
 
 
         }).catch((error) => {

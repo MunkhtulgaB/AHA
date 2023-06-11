@@ -12,11 +12,18 @@ const db = getDatabase();
 
 // Helper methods
 function writeUserData(userId, name, email, imageUrl) {
-    set(ref(db, 'users/' + userId), {
+  const write_location = 'users/' + userId;
+  
+  return get(child(ref(db), write_location))
+  .then((snapshot) => {
+    if (!snapshot.exists()) {
+      return set(ref(db, write_location), {
         username: name,
         email: email,
         profile_picture : imageUrl
-    });
+      });
+    }
+  });
 }
 
 
@@ -47,4 +54,4 @@ function getData(userId) {
     });
 }
 
-export { writeImageData, updateImageData }
+export { writeUserData, writeImageData, updateImageData }
