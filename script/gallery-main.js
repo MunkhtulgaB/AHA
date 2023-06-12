@@ -13,6 +13,19 @@ const auth = getAuth(app);
 const TOO_GENERIC_NAMES = ["animal"];
 const MAX_ANNOTATIONS = 1;
 
+const EXPLANATION_DURATION = 30 * 1000;
+const INTERVAL = 3 * 60 * 1000; 
+var interval_counter = 0
+
+
+
+showExplanation();
+setInterval(function() {
+  console.log(interval_counter);
+
+  showExplanation();
+  interval_counter += 1
+}, INTERVAL)
 
 
 onAuthStateChanged(auth, (user) => {
@@ -212,4 +225,45 @@ function annotateImage(imgKey, annotations) {
     label_div.appendTo(`#card${imgKey}`).fadeIn(1000);
     num_annotations++;
   });
+}
+
+
+function showExplanation() {
+  // Show explanation
+  const explanation = $(`
+    <div id="cover">
+      <div id="coverContent" style="width: fit-content; background-color: white;">
+        <div style="text-align: left; margin: 20px; display: flex; flex-direction: row;">
+            <img src="images/card-example.drawio.png" width="300px">
+            <div style="width: 400px; text-align: left; align-self: center; height: fit-content; margin: 20px;">
+                <ol>
+                <li class="mb-3">
+                The blue box shows the <b>bounding box</b> of an object detected by an AI image processor 
+                (Google's Cloud Vision).
+                </li>
+                <li class="mb-3">
+                The annotation and percentage shows <b>the class</b> of object detected and the AI detector's <b>confidence</b> in the detection.
+                </li>
+                <li class="mb-3">
+                The title is <b>either a prompt</b> used to generate the image if the image is AI-generated <b>or a user-provided title</b> describing what is depicted.
+                </li>
+                <li>
+                Finally, the <b>author type</b> specifies whether the image was created by a human or an AI image generator.
+                </li>
+                </ol>
+
+            </div>
+        </div>        
+      </div>
+    </div>
+  `)
+
+  explanation.hide().appendTo("body").fadeIn(500);
+
+  // Remove after a duration
+  setTimeout(function() {
+    explanation.fadeOut(500, function() {
+      explanation.remove();
+    });
+  }, EXPLANATION_DURATION);
 }
