@@ -19,13 +19,13 @@ var interval_counter = 0
 
 
 
-// showExplanation();
-// setInterval(function() {
-//   console.log(interval_counter);
+showExplanation();
+setInterval(function() {
+  console.log(interval_counter);
 
-//   showExplanation();
-//   interval_counter += 1
-// }, INTERVAL)
+  showExplanation();
+  interval_counter += 1
+}, INTERVAL)
 
 
 onAuthStateChanged(auth, (user) => {
