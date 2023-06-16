@@ -12,12 +12,11 @@
 }
 
 img.card-img-top {
-    height: 24vh;
+    height: 23.8vh;
 }
 
 .img-card > .card-body {
-    margin-top: 1vh;
-    font-size: 1vh;
+    font-size: 1.5vh;
 }
 
 .img-card > .card-body-admin {
