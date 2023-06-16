@@ -2,17 +2,22 @@
     display: flex;
     height: fit-content;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .img-card {
     margin: 10px;
-    width: 200px;
     box-shadow: 1px 1px 3px grey;
+    font-size: 0.7em;
+}
+
+img.card-img-top {
+    height: 24vh;
 }
 
 .img-card > .card-body {
-    height: 60px;
-    font-size: 12px;
+    margin-top: 1vh;
+    font-size: 1vh;
 }
 
 .img-card > .card-body-admin {

@@ -13,19 +13,19 @@ const auth = getAuth(app);
 const TOO_GENERIC_NAMES = ["animal"];
 const MAX_ANNOTATIONS = 1;
 
-const EXPLANATION_DURATION = 30 * 1000;
-const INTERVAL = 3 * 60 * 1000; 
+const EXPLANATION_DURATION = 20 * 1000;
+const INTERVAL = 60 * 1000; 
 var interval_counter = 0
 
 
 
-showExplanation();
-setInterval(function() {
-  console.log(interval_counter);
+// showExplanation();
+// setInterval(function() {
+//   console.log(interval_counter);
 
-  showExplanation();
-  interval_counter += 1
-}, INTERVAL)
+//   showExplanation();
+//   interval_counter += 1
+// }, INTERVAL)
 
 
 onAuthStateChanged(auth, (user) => {
@@ -77,8 +77,8 @@ function addImage(data, addPosition) {
     // Add card image
     const content =             
       `<div id="card${data.key}" class="img-card card">
-          <img class="card-img-top" id="${data.key}" src="${imgData.imageBase64}" width="300px;"/>
-          <div class="card-body" style="margin-top: 10px;">
+          <img class="card-img-top" id="${data.key}" src="${imgData.imageBase64}"/>
+          <div class="card-body">
           </div>
       </div>`;
 
