@@ -233,8 +233,8 @@ function showExplanation() {
   const explanation = $(`
     <div id="cover">
       <div id="coverContent" style="width: fit-content; background-color: white;">
-        <div style="text-align: left; margin: 20px; display: flex; flex-direction: row;">
-            <img src="images/card-example.drawio.png" width="300px">
+        <div id="explanation">
+            <img src="images/card-example.drawio.png">
             <div style="width: 400px; text-align: left; align-self: center; height: fit-content; margin: 20px;">
                 <ol>
                 <li class="mb-3">

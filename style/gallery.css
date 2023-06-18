@@ -27,3 +27,15 @@ img.card-img-top {
 body {
     overflow-y: hidden;
 }
+
+#explanation {
+    text-align: left; 
+    margin: 20px; 
+    display: flex; 
+    flex-direction: row;
+    font-size: 1.8vh;
+}
+
+#explanation > img {
+    height: 50vh;
+}
