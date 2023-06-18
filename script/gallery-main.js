@@ -353,7 +353,7 @@ function showCollectiveSpaceArtContext() {
             <p><b>Uncanny composition</b></p>
 
             <p class="lead">
-            "A vast plaza opens out before us. Its’ population appears to correspond to hierarchical groupings seen in classical Fine Art painting: the common folk on the lowest tier, sat chatting in groups, their feet placed firmly on the dusty ground. On the second tier are middle-class suits, gazing outward with a sense of achievement. The top tier seems reserved for the (literally) highest thinkers, most of whom seem engaged in complex, solitary tasks. But here is where the familiar structures end..."
+            "A vast plaza opens out before us. Its population appears to correspond to hierarchical groupings seen in classical Fine Art painting: the common folk on the lowest tier, sat chatting in groups, their feet placed firmly on the dusty ground. On the second tier are middle-class suits, gazing outward with a sense of achievement. The top tier seems reserved for the (literally) highest thinkers, most of whom seem engaged in complex, solitary tasks. But here is where the familiar structures end..."
             </p>
             
             <p style="text-align: right; margin-top: 20px;">Alice White, Collaborating Artist, Art Lecturer</p>
