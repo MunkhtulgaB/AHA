@@ -16,21 +16,26 @@ const MAX_ANNOTATIONS = 1;
 const EXPLANATION_DURATION = 20 * 1000;
 const PORTRAIT_COMMENT_DURATION = 24 * 1000;
 const INTERVAL = 50 * 1000; 
-var interval_counter = 0
+var interval_counter = 0;
+var interleave_number = 0;
 
-
-
+const interleavedContents = [
+  showPortraitArtContext,
+  showCollectiveSpaceArtContext,
+  showGoodPersonArtContext
+]
 showExplanation();
 setInterval(function() {
-  interval_counter += 1
+  interval_counter += 1;
   console.log(interval_counter);
 
-  if (interval_counter % 2 == 1) {
-    showPortraitArtContext();
-  } else {
+  if (interval_counter % 2 == 0) {
     showExplanation();
+  } else {
+    const show = interleavedContents[interleave_number % interleavedContents.length];
+    show();
+    interleave_number += 1;
   }
-  
 }, INTERVAL)
 
 
@@ -329,4 +334,84 @@ function showPortraitArtContext() {
         content.remove();
     });
     }, PORTRAIT_COMMENT_DURATION);
+}
+
+
+function showCollectiveSpaceArtContext() {
+  const content = $(`
+    <div id="cover">
+      <div id="coverContent" style="width: fit-content; background-color: white;">
+        <div id="explanation">
+            <div>
+            <img src="images/blog/collective-space.png" style="height: 70vh">
+            <h4 style="text-align: center; margin-top: 30px;">
+              "<b>The collective space of human perspectives"</b> by Midjourney AI
+            </h4>
+            </div>
+            <div id="content-text" style="font-size: 2vh; width: 600px; padding-left: 50px; align-self: center; height: fit-content; margin: 20px;">
+                
+            <p><b>Uncanny composition</b></p>
+
+            <p class="lead">
+            "A vast plaza opens out before us. Its’ population appears to correspond to hierarchical groupings seen in classical Fine Art painting: the common folk on the lowest tier, sat chatting in groups, their feet placed firmly on the dusty ground. On the second tier are middle-class suits, gazing outward with a sense of achievement. The top tier seems reserved for the (literally) highest thinkers, most of whom seem engaged in complex, solitary tasks. But here is where the familiar structures end..."
+            </p>
+            
+            <p style="text-align: right; margin-top: 20px;">Alice White, Collaborating Artist, Art Lecturer</p>
+
+          
+            <img src="images/qr-codes/artistic-perspective.png" style="height: 15vh; float: right">
+        </div>        
+      </div>
+    </div>
+  `)
+
+  content.hide().appendTo("body").fadeIn(500);
+
+  // Remove after a duration
+  setTimeout(function() {
+    content.fadeOut(500, function() {
+      content.remove();
+  });
+  }, EXPLANATION_DURATION);
+}
+
+
+function showGoodPersonArtContext() {
+  const content = $(`
+    <div id="cover">
+      <div id="coverContent" style="width: fit-content; background-color: white;">
+        <div id="explanation">
+            <div>
+            <img src="images/blog/a-good-person.png" style="height: 70vh">
+            <h4 style="text-align: center; margin-top: 30px;">
+              "<b>A good person"</b> by Midjourney AI
+            </h4>
+            </div>
+            <div id="content-text" style="font-size: 2vh; width: 600px; padding-left: 50px; align-self: center; height: fit-content; margin: 20px;">
+                
+            <p><b>Ethical judgement & imagery</b></p>
+
+            <p class="lead">
+            "This is an AI generated image of what ‘a good person’ is. 
+
+            No other prompts have been provided: MidJourney has created this whole scene, and the details of each figure, out of only those three words...  "
+            </p>
+            
+            <p style="text-align: right; margin-top: 20px;">Alice White, Collaborating Artist, Art Lecturer</p>
+
+          
+            <img src="images/qr-codes/artistic-perspective.png" style="height: 15vh; float: right">
+        </div>        
+      </div>
+    </div>
+  `)
+
+  content.hide().appendTo("body").fadeIn(500);
+
+  // Remove after a duration
+  setTimeout(function() {
+    content.fadeOut(500, function() {
+      content.remove();
+  });
+  }, EXPLANATION_DURATION);
 }
