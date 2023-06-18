@@ -14,6 +14,7 @@ const TOO_GENERIC_NAMES = ["animal"];
 const MAX_ANNOTATIONS = 1;
 
 const EXPLANATION_DURATION = 20 * 1000;
+const PORTRAIT_COMMENT_DURATION = 24 * 1000;
 const INTERVAL = 50 * 1000; 
 var interval_counter = 0
 
@@ -21,18 +22,24 @@ var interval_counter = 0
 
 showExplanation();
 setInterval(function() {
+  interval_counter += 1
   console.log(interval_counter);
 
-  showExplanation();
-  interval_counter += 1
+  if (interval_counter % 2 == 1) {
+    showPortraitArtContext();
+  } else {
+    showExplanation();
+  }
+  
 }, INTERVAL)
 
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log(user)
+        console.log(user)
         const imagesRef = ref(db, "images");
         writeUserData(user.uid, user.displayName, user.email, user.photoURL)
+        
         onChildAdded(imagesRef, addImage);
         onChildChanged(imagesRef, updateImage);
         onChildRemoved(imagesRef, function(data) {
@@ -266,4 +273,60 @@ function showExplanation() {
       explanation.remove();
     });
   }, EXPLANATION_DURATION);
+}
+
+
+function showPortraitArtContext() {
+    const content = $(`
+      <div id="cover">
+        <div id="coverContent" style="width: fit-content; background-color: white;">
+          <div id="explanation">
+              <div>
+              <img src="images/portraits/doctor.png" style="height: 70vh">
+              <h4 style="text-align: center; margin-top: 30px;">
+                "<b>A doctor"</b> by Midjourney AI
+              </h4>
+              </div>
+              <div id="content-text" style="font-size: 2vh; width: 500px; padding-left: 50px; align-self: center; height: fit-content; margin: 20px;">
+                  
+              <p><b>The power of portraits</b> <span style="color: grey"> 1/2</span></p>
+
+              <p class="lead">
+              "Traditionally, portrait paintings are loaded with signs, signifiers and visual clues...
+              An artist can use every element of a portrait to highlight (or conceal) the nature of their subject...
+              Several factors can convey the subject’s societal status, or can be used to project the status which the subject would ideally desire.
+              "
+              </p>
+              
+              <p style="text-align: right; margin-top: 20px;">Alice White, Collaborating Artist, Art Lecturer</p>
+          </div>        
+        </div>
+      </div>
+    `)
+
+    content.hide().appendTo("body").fadeIn(500);
+
+    // Change text after half duration
+    setTimeout(function() {
+      $("#content-text").fadeOut(500, function() {
+        $("#content-text").html(`
+          <p><b>AI hazards</b> <span style="color: grey"> 2/2</span></p>
+          <p>
+          Hallucination, cultural appropriation, and racial bias are among the issues we raise with AI-generated portraits.
+          </p>
+
+          <p>Scan the QR code below to read more:</p>
+          <img src="images/qr-codes/artistic-perspective.png" style="height: 15vh;">
+        `).fadeIn(500);
+      });
+    }, PORTRAIT_COMMENT_DURATION/2);
+    
+    
+
+    // Remove after a duration
+    setTimeout(function() {
+      content.fadeOut(500, function() {
+        content.remove();
+    });
+    }, PORTRAIT_COMMENT_DURATION);
 }
