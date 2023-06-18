@@ -14,7 +14,7 @@ const TOO_GENERIC_NAMES = ["animal"];
 const MAX_ANNOTATIONS = 1;
 
 const EXPLANATION_DURATION = 20 * 1000;
-const INTERVAL = 60 * 1000; 
+const INTERVAL = 30 * 1000; 
 var interval_counter = 0
 
 
