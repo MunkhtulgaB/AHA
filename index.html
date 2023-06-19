@@ -4,12 +4,11 @@
 <meta charset=utf-8>
 <title>AHA! - Home page</title>
 <link rel="stylesheet" href="style/main.css">
-<!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<link rel="stylesheet" href="script/plugins/bootstrap/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 <script src="script/fade.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="script/plugins/bootstrap/bootstrap.bundle.min.js"></script>
 <style>
     body {
         height: 100%;
@@ -75,8 +74,96 @@
         </div>
     </div>
 
+    <div class="slide page fade">
+        <h1>Art Human & AI</h1>
+        
+        <p class="lead">
+            AHA! is a research project, which explores the divide between human intelligence and AI through art.
+            We aim to leverage art, which is bounded by not reality but the human mind, to obtain an insight into the ability of humans to 
+            generalize their knowledge to wildly diverse perspectives and robustly capture a common essence in those. 
+        </p>
+        <p class="lead">
+            We do so to address some of the biggest questions in contemporary AI research.
+            Current AI models based on deep learning often do not generalize well outside their training data. 
+            Furthermore, they are vulnerable to adversarial attacks, non-essential changes in the data that aim to change their decision on a given input.
+            By challenging existing methods with artistic images that creatively break the rules of reality without losing the essence, 
+            we can move toward new developments that lead to better AI models.
+        </p>
 
-    <div class="text-center slide page">
+        <p class="lead">
+            Take part in this research through our exhibitions and contribute your one of a kind perspective. Explore what different implications AI has on your life and society as a whole.
+            <ul class="lead list-unstyled" style="padding: 2vw; width: 700px;">
+                <li class="mb-3">
+                    <h3><a href="#what-is-essence" class="font-weight-bold text-dark text-decoration-none">What is Essence?</a></h3>
+                    opening on 21st June 2023 in Science Gallery London as part of their new season "<a href="https://london.sciencegallery.com/ai-season">AI: Who's Looking After Me?</a>" in collaboration with <a href="https://futureeverything.org/about/">FutureEverything</a>
+                </li>
+                <li>
+                    <h3><a href="#perspective-spaces" class="font-weight-bold text-dark text-decoration-none">Perspective Spaces</a></h3>
+                    running between 2 May to 30 June 2023 in King's College London as part of "<a href="https://www.kcl.ac.uk/ai/exhibition-2023">Bringing the Human to the Artificial</a>" by King's Institute for AI.
+                </li>
+            </ul>
+        </p>
+    </div>
+
+    <div id="what-is-essence" class="slide page fade">
+        <h1>What is essence?</h1>
+
+        <div class="wrapping-row">
+            <div style="width: 750px;">
+                <img src="images/sgl-AI-season.png">
+            </div>
+            <div class="side-text">
+                In What is Essence? visitors are invited to consider the very essence
+                 of seeing and express their own unique perspective of the world.
+                  Using a diverse range of AI-generated ‘artistic’ depictions 
+                  of natural objects, the exhibit pushes the limits of current AI capabilities, 
+                  exposing the ever-closing gap between human intelligence and
+                   AI and examining the nature of our own perceptive abilities.
+
+                <ul class="mt-5 list-unstyled">
+                    <li>Wed - Sat 11:00 - 18:00 | <b>FREE entry</b></li>
+                    <li class="mb-1">21 June 2023 - 20 January 2024</li>
+                    <li><b>SCIENCE GALLERY LONDON<br>
+                        King’s College London, Guy’s Campus<br>
+                        Great Maze Pond<br>
+                        London SE1 9GU</b></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="perspective-spaces" class="slide page fade">
+        <h1>Perspective spaces</h1>
+
+        <div class="wrapping-row">
+            <div style="width: 750px;">
+                <img src="images/bringing-human-to-artificial.png">
+            </div>
+
+            <div class="side-text">
+                What are the boundaries of the human mind and, 
+                more importantly, where can we seek and find those boundaries? 
+                Answering these questions can help us solve the key 
+                problems in modern AI (like generalisation and robustness
+                 to noise) that are surprisingly difficult for AI models 
+                 but trivial for humans. Can we find the answer from art, 
+                 the only source of data that captures the unique ways 
+                 in which we humans see reality and beyond?
+
+                <ul class="mt-5 list-unstyled">
+                    <li>Mon - Fri 10:00 - 18:00 | <b>FREE entry</b></li>
+                    <li class="mb-1">2 May - 30 June 2023</li>
+                    <li><b>BUSH HOUSE ARCADE<br>
+                        Arcade at Bush House<br>
+                        South Wing<br>
+                        Strand WC2B 4PJ</b></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="text-center slide page">
         <a id="btn-ai" href="#ai-essence" class="link-guide">What is essence?</a>
     </div>
 
@@ -112,7 +199,7 @@
         </p>
 
         <h1>What is essence?</h1>
-    </div>
+    </div> -->
 
 </body>
 </html>

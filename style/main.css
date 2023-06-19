@@ -24,8 +24,8 @@ img {
     justify-content: center;
     padding-top: 10vh;
     padding-bottom: 10vh;
-    padding-left:  20vw;
-    padding-right: 20vw;
+    padding-left:  15vw;
+    padding-right: 15vw;
     font-size: 2.5rem;
 }
 
@@ -42,4 +42,23 @@ img {
     box-shadow: inset 0px 5px 5px rgba(36, 50, 93, 0.03);
     padding: 0; 
     z-index: 0;
+}
+
+.wrapping-row {
+    display: flex;
+    flex-direction: row;
+    /* border: 1px solid red; */
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+}
+
+.wrapping-row > img {
+    max-width: 500px;
+}
+
+.side-text {
+    width: 520px;
+    padding-left: 2vw;
+    font-size: 0.5em;
 }
