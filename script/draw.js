@@ -1,56 +1,95 @@
-import { writeImageData } from "./firebase.js";
+import { writeImageData, writeUserData } from "./firebase.js";
+import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js'
+import { config } from "./config.js"
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js'
 
+
+const firebaseConfig = config;
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 var current_object = null;
 var inappropriate_attempt_count = 0;
 const INAPPROPRIATE_ATTEMPT_LIMIT = 3;
 
 
-$("#start-btn").click(function() {
-    // Remove the cover content
-    $("#coverContent").fadeOut(500, function() {
-        $(this).remove();   
-        // Replace with option screen
-        const options = [
-            "Bird",
-            "Cat",
-            "Dog",
-            "Fish",
-            "Horse",
-            "Human",
-            "Monkey",
-            "Octopus",
-            "Snake",
-            "Spider",
-            "Other"
-        ];
-        const optionButtons = options.map(function(option, idx) {
-            return `<input type="radio" name="options" id="option${idx}" class="btn-check" autocomplete="off" value="${option}">
-            <label class="btn btn-light" for="option${idx}">${option}</label>`
-        })
-        const optionScreen = $(`
-            <div id="optionsContainer">
-            <h2>Choose your animal/object</h2>
-            <br>
-            <div>
-                ${optionButtons.join("")}
-            </div>
-            </div>
-        `)
-       
-        optionScreen.hide().appendTo("#cover").fadeIn(500);
-        $("input[name='options']").change(function() {
-            const selected = $("input[name=options]:checked").val();
-            current_object = selected;
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        console.log(user)
+        
+        writeUserData(user.uid, user.displayName, user.email, user.photoURL);
+        $("#start-btn").click(function() {
+            // Remove the cover content
+            $("#coverContent").fadeOut(500, function() {
+                $(this).remove();   
+                // Replace with option screen
+                const options = [
+                    "Bird",
+                    "Cat",
+                    "Dog",
+                    "Fish",
+                    "Horse",
+                    "Human",
+                    "Monkey",
+                    "Octopus",
+                    "Snake",
+                    "Spider",
+                    "Other"
+                ];
+                const optionButtons = options.map(function(option, idx) {
+                    return `<input type="radio" name="options" id="option${idx}" class="btn-check" autocomplete="off" value="${option}">
+                    <label class="btn btn-light" for="option${idx}">${option}</label>`
+                })
+                const optionScreen = $(`
+                    <div id="optionsContainer">
+                    <h2>Choose your animal/object</h2>
+                    <br>
+                    <div>
+                        ${optionButtons.join("")}
+                    </div>
+                    </div>
+                `)
+               
+                optionScreen.hide().appendTo("#cover").fadeIn(500);
+                $("input[name='options']").change(function() {
+                    const selected = $("input[name=options]:checked").val();
+                    current_object = selected;
+        
+                    $("#optionsContainer").fadeOut(500, function() {
+                        initDrawInteraction();
+                        $("#cover").remove();
+                    })
+                })
+            });
+        });        
+    } else {
+        // User is signed out
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // IdP data available using getAdditionalUserInfo(result)
+            // ...
+            writeUserData(user.uid, user.displayName, user.email, user.photoURL);
 
-            $("#optionsContainer").fadeOut(500, function() {
-                initDrawInteraction();
-                $("#cover").remove();
-            })
-        })
-    });
-})
 
+        }).catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // ...
+            console.log(errorMessage)
+        });
+    }
+});
 
 
 function initDrawInteraction() {
