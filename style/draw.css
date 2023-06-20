@@ -19,6 +19,7 @@ canvas {
     align-self: center;
     aspect-ratio: 1 / 1;
     width: min(80vh, 80vw);
+    height: min(80vh, 80vw);
     margin: 20px 0;
     border: 3px dotted gray;
 }
