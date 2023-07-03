@@ -1,6 +1,6 @@
 import { writeUserData, writeImageData, updateImageData } from "./firebase.js";
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js'
-import { getDatabase, onChildAdded, onChildRemoved, onChildChanged, ref, set, push, child, get } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js'
+import { getDatabase, onChildAdded, query, onChildRemoved, onChildChanged, ref, limitToLast, set, push, child, get } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js'
 import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js'
 import { config } from "./config.js"
 import "https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js";
@@ -13,9 +13,11 @@ const auth = getAuth(app);
 const TOO_GENERIC_NAMES = ["animal"];
 const MAX_ANNOTATIONS = 1;
 
+const MAX_IMAGES = 30;
 const EXPLANATION_DURATION = 20 * 1000;
 const PORTRAIT_COMMENT_DURATION = 24 * 1000;
 const INTERVAL = 50 * 1000; 
+
 var interval_counter = 0;
 var interleave_number = 0;
 
@@ -42,7 +44,7 @@ setInterval(function() {
 onAuthStateChanged(auth, (user) => {
     if (user) {
         console.log(user)
-        const imagesRef = ref(db, "images");
+        const imagesRef = query(ref(db, "images"), limitToLast(MAX_IMAGES));
         writeUserData(user.uid, user.displayName, user.email, user.photoURL)
         
         onChildAdded(imagesRef, addImage);
