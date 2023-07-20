@@ -1,6 +1,6 @@
 import { writeUserData, writeImageData } from "./firebase.js";
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js'
-import { getDatabase, onChildAdded, onChildRemoved, ref, update} from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js'
+import { getDatabase, query, limitToLast, onChildAdded, onChildRemoved, ref, update} from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js'
 import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js'
 import { config } from "./config.js"
 import "https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js";
@@ -10,6 +10,7 @@ const firebaseConfig = config;
 const app = initializeApp(firebaseConfig);
 const db = getDatabase();
 const auth = getAuth(app);
+const MAX_IMAGES = 40;
 
 
 const eye_icon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
@@ -26,7 +27,8 @@ const eye_slash_icon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" heigh
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        const imagesRef = ref(db, "images");
+        const imagesRef = query(ref(db, "images"), limitToLast(MAX_IMAGES));
+        
         onChildAdded(imagesRef, function(data) {
             const imgData = data.val();
             console.log("loaded image", imgData.name);
