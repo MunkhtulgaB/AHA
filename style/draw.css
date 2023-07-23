@@ -1,6 +1,8 @@
 body {
     margin:0px;
     display: grid;
+    overscroll-behavior: contain;
+    overflow-y: hidden;
 }
 canvas {
     -webkit-touch-callout: none;
