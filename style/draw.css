@@ -2,6 +2,7 @@ body {
     margin:0px;
     display: grid;
     overscroll-behavior: contain;
+    overscroll-behavior-y: contain;
     overflow-y: hidden;
 }
 canvas {
